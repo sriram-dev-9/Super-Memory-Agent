@@ -62,6 +62,7 @@ def update_memory_tool(id:str,content:str, title:str, storage_type:str):
         result = client.memories.update(
             id = id,
             content=content,
+            metadata=metadata
         )
         return f"Successfully updated the memory of id: {getattr(result, 'id', 'unknown')}"
     except Exception as e:
@@ -78,6 +79,8 @@ def delete_memories_tool(id:str):
 @tool
 def list_memories_tool():
     """Returns a list of all memories along with their IDs."""
+    memories = client.memories.list()
+    return memories.memories
 
 
-tools = [memory_store_tool,memory_search_tool,update_memory_tool]
+tools = [memory_store_tool,memory_search_tool,update_memory_tool,list_memories_tool]
